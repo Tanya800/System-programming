@@ -27,7 +27,7 @@ void NextMoveStep(HWND hwnd) {
 // Проверяем текущее состояние
 	switch (MoveState) {
 	case MS_DOWN: // движение вниз
-		// Если координата y достигла значения 300, переходим в состояние «движение вправо-вверх»
+		// Если координата y достигла значения 300, переходим в состояние «движение вправо-вверх» или «движение влево-вверх»
 		if (Base.y > 300) {
 			if (Base.x <= 50) MoveState = MS_TOPRIGHT;
 			else MoveState = MS_TOPLEFT;
@@ -36,7 +36,7 @@ void NextMoveStep(HWND hwnd) {
 		else Base.y += Step.y;
 		break;
 	case MS_TOPRIGHT: // движение вправо-вверх
-		// Если координата y достигла значения 10, переходим в состояние «движение вниз»
+		// Если координата y достигла значения 0, переходим в состояние «движение вниз»
 		if (Base.y <= 0) MoveState = MS_DOWN;
 		// а иначе продолжаем движение вправо
 		else {
@@ -45,7 +45,7 @@ void NextMoveStep(HWND hwnd) {
 		}
 		break;
 	case MS_TOPLEFT: // движение влево-вверх
-// Если координата x стала меньше 100, переходим в исходное состояние «движение вниз»
+// Если координата y стала меньше 0, переходим в исходное состояние «движение вниз»
 		if (Base.y <= 0) MoveState = MS_DOWN;
 		// а иначе продолжаем движение влево-вверх
 		else {
@@ -94,13 +94,6 @@ BOOL RegClass(WNDPROC Proc, LPCTSTR szName, UINT brBackground) {
 	return (RegisterClass(&wc) != 0);
 }
 
-// UINT_PTR SetTimer(
-//   HWND hWnd, // дескриптор окна, которому направляются сообщения
-//   UINT_PTR nIDEvent, // уникальный идентификатор таймера
-//   UINT uElapse, // период таймера, мс
-//   TIMERPROC lpTimerFunc // функция, вызываемая при срабатывании
-// );
-
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
                          WPARAM wParam, LPARAM lParam) {
@@ -129,8 +122,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
 	default:
 		DefWindowProc(hwnd, msg, wParam, lParam);
 	}
-	// помечаем всю клиентскую область окна, как требующую перерисовки
-	//InvalidateRect(hwnd, NULL, 1);
+
 }
 
 
