@@ -87,23 +87,23 @@ void ClientDraw(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 	lb.lbStyle = BS_SOLID; // стиль заливки - сплошной
 	lb.lbColor = RGB(255, 255, 0); // цвет - красный
 	lb.lbHatch = 0; // штриховки нет
-	int TopY = 400,
-			DownY= 700,
-			MinX=30,
-			MaxX=80;
+	int TopY = 10,
+			DownY= 100,
+			MinX=50,
+			MaxX=150;
 	HGDIOBJ hPen1 = ExtCreatePen(PS_GEOMETRIC | PS_DASH, 5, &lb, 0, NULL);// создаём перо1: пунктирная линия (PS_SOLID), ширина 5
 	SelectObject(hdc, hPen1);// выбираем новое перо (1)
-	MoveToEx(hdc, TopY, MinX, NULL);
-	LineTo(hdc, DownY, MaxX);
-	MoveToEx(hdc, TopY, MaxX, NULL);
-	LineTo(hdc, DownY, MinX);
+	MoveToEx(hdc, MinX, TopY, NULL);
+	LineTo(hdc,MaxX, DownY );
+	MoveToEx(hdc,MaxX, TopY,  NULL);
+	LineTo(hdc, MinX, DownY);
 
 	lb.lbColor = RGB(0, 0, 0); // цвет - черный
 	HGDIOBJ hPen2 = ExtCreatePen(PS_GEOMETRIC | PS_DOT, 1, &lb, 0, NULL);
 	SelectObject(hdc, hPen2); 
 	SelectObject(hdc, GetStockObject(NULL_BRUSH));
 	// MoveToEx(hdc, 200, 20, NULL);
-	Rectangle(hdc, TopY, MinX, DownY, MaxX);
+	Rectangle(hdc,MinX, TopY, MaxX, DownY);
 	
 	// Уничтожаем созданные нами перья (освобождаем ресурсы)
 	DeleteObject(hPen1);
